@@ -1,0 +1,13 @@
+{
+  "id": "net.novelfire",
+  "name": "NovelFire",
+  "author": "Your Name",
+  "description": "Light novels and web novels from NovelFire.net",
+  "version": "1.0",
+  "url": "https://novelfire.net",
+  "contentRating": "safe",
+  "categories": ["novels"],
+  "file": "NovelFire.aix",
+  "icon": "https://novelfire.net/favicon.ico",
+  "languages": ["en"]
+}
