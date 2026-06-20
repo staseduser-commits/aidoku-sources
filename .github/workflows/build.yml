@@ -42,7 +42,7 @@ jobs:
       - name: Build source list
         run: |
           mkdir -p public
-          aidoku build sources/**/package.aix -o public -w --web-title "My Aidoku Sources"
+          aidoku build sources/**/package.aix -o public
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
