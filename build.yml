@@ -1,0 +1,46 @@
+name: Build Source List
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.85.0"
+          targets: wasm32-unknown-unknown
+
+      - name: Install aidoku-cli
+        run: cargo install --git https://github.com/Aidoku/aidoku-rs aidoku-cli
+
+      - name: Build sources
+        run: |
+          for dir in sources/*/; do
+            echo "Building $dir"
+            cd "$dir"
+            aidoku package
+            cd ../..
+          done
+
+      - name: Build source list
+        run: |
+          mkdir -p public
+          aidoku build sources/**/package.aix -o public -w --web-title "My Aidoku Sources"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
