@@ -16,14 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust
+      - name: Install Rust for aidoku-cli
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: "1.87.0"
+
+      - name: Install aidoku-cli
+        run: cargo install --git https://github.com/Aidoku/aidoku-rs aidoku-cli
+
+      - name: Install Rust for sources
         uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: "1.85.0"
           targets: wasm32-unknown-unknown
-
-      - name: Install aidoku-cli
-        run: cargo install --git https://github.com/Aidoku/aidoku-rs aidoku-cli
 
       - name: Build sources
         run: |
